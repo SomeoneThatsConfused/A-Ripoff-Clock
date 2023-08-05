@@ -1,12 +1,17 @@
 //  Variables ↓
-
+let isFirstClick = true;
   // timeElapsed Variables ↓
+  let timeElapsed = 0;
   let millisecond = 0;
   let second = 0;
   let minute = 0;
   let hour = 0;
   let stopWatchInterval;
   let isRunning = false;
+  let formattedMS;
+  let formattedSec;
+  let formattedMin ;
+  let formattedHour;
 
 
   // StopWatch Variables ↓
@@ -25,13 +30,18 @@
 
   // Lap Variables 
   const lapList = document.querySelector('.lapList');
-  const laps = [];
-  const lapIndex = laps.length + 1;
-  const lapContainer = document.createElement('div');
-  let lapStartTime;
+  let lapStartTime = 0;
+  let lapDuration = 0;
+  let laps = [];
   let emptyLapsMessage;
+  let lapTimer;
+  let fastestLap;
 // Event Listeners ↓
-
+lapBtn.addEventListener('click', () => {
+  addLap();
+  checkLaps();
+  resetLapDuration();
+})
 resetBtn.addEventListener('click', () => {
   resetStopWatch();
 });
@@ -40,11 +50,18 @@ playStopBtn.addEventListener('click', () => {
   if (isRunning) {
     stopStopWatch();
     lapBtn.disabled = true;
+    stopLapTimer();
   } else {
     startStopWatch();
     lapBtn.disabled = false;
+    startLapTimer();
+    if (isFirstClick) {
+      addLap();
+      isFirstClick = false;
+    }
   }
   resetBtn.disabled = false;
+  checkLaps();
   isButtonDisabled();
   pauseSvg.classList.toggle('hidden');
   playSvg.classList.toggle('hidden');
@@ -60,8 +77,13 @@ function startStopWatch() {
 }
 
 function updateStopWatch() {
-  millisecond++
+  timeElapsed++;
+  millisecond++;
   
+  formatStopWatch()
+}
+
+function formatStopWatch() {
   if (millisecond > 99) {
     second++
     millisecond = 0;
@@ -77,10 +99,10 @@ function updateStopWatch() {
   }
 
   // formatting
-  let formattedMS = millisecond;
-  let formattedSec = second;
-  let formattedMin = minute;
-  let formattedHour = hour;
+  formattedMS = millisecond;
+  formattedSec = second;
+  formattedMin = minute;
+  formattedHour = hour;
   if (millisecond < 10) {
     formattedMS = `0${millisecond}`
   }
@@ -123,17 +145,23 @@ function resetStopWatch() {
   playSvg.classList.add('hidden');
   clearInterval(stopWatchInterval);
   isRunning = false;
+  isFirstClick = true;
+  timeElapsed = 0;
   millisecond = -1;
   second = 0;
   minute = 0;
   hour = 0;
-  
+  laps = [];
+  lapList.innerHTML = '';
   resetBtn.disabled = true;
   lapBtn.disabled = true;
   playStopBtn.disabled = false;
   isButtonDisabled();
   updateStopWatch();
-  addMessage('StopWatch has been Reset');
+  checkLaps();
+  addMessage('StopWatch and Laps has been Reset');
+  stopLapTimer();
+  resetLapDuration();
 }
 
 function isButtonDisabled() {
@@ -160,13 +188,13 @@ function addMessage(text) {
   document.body.appendChild(messageContainer);
   setInterval(() => {
     messageContainer.remove();
-  }, 5000)
+  }, 3000)
 }
 
 function noLapsMessage() {
   emptyLapsMessage = document.createElement('div');
-  emptyLapsMessage.textContent = "Nothing to see here ¯\\_(ツ)_/¯ press the flag if you wanna see stuff";
-  emptyLapsMessage.classList.add('mt-5', 'text-zinc-500', 'font-bold', 'text-xl', 'w-2/3', 'text-center')
+  emptyLapsMessage.textContent = "Nothing to see here press the flag if you wanna see stuff  ¯\\_(ツ)_/¯ ";
+  emptyLapsMessage.classList.add('mt-5', 'text-zinc-500', 'font-bold', 'text-xl', 'w-2/3', 'text-center', 'mx-auto')
   lapList.appendChild(emptyLapsMessage);
 }
 function removeLapsMessage() {
@@ -184,17 +212,108 @@ function checkLaps() {
 }
 
 function addLap() {
+  const lapContainer = document.createElement('div');
   const lapNumber = document.createElement('div');
   const lapTime = document.createElement('div');
-  lapTime.textContent = 
-  lapNumber.textContent = `Lap ${lapIndex}`
-  lapContainer.appendChild(lapNumber)
-  lapContainer.push(laps);
+
+  const lapEndTime = timeElapsed;
+  const lapDuration = lapEndTime - lapStartTime;
+  lapStartTime = lapEndTime;
+
+  lapContainer.classList.add('mt-2', 'text-white', 'text-md', 'md:text-xl', 'lg:text-2xl', 'font-bold', 'border-b-2', 'pb-2', 'border-zinc-500', 'flex', 'justify-around');
+  lapTime.classList.add('text-zinc-300', 'lapTime');
+
+  const formattedLapTime = formatLapTime(lapDuration);
+  lapTime.textContent = formattedLapTime;
+
+  lapNumber.textContent = `Lap ${laps.length + 1}`;
+  lapContainer.appendChild(lapNumber);
+  lapContainer.appendChild(lapTime);
+
+  laps.push({ container: lapContainer, duration: lapDuration });
   displayLaps();
+  
+  startLapTimer(lapDuration);
+}
+
+function formatLapTime(lapDuration) {
+  const lapHour = Math.floor(lapDuration / 360000);
+  const lapMinute = Math.floor((lapDuration % 360000) / 6000);
+  const lapSecond = Math.floor((lapDuration % 6000) / 100);
+  const lapMillisecond = lapDuration % 100;
+
+  let formattedMS = lapMillisecond.toString().padStart(2, '0');
+  let formattedSec = lapSecond.toString().padStart(2, '0');
+  let formattedMin = lapMinute.toString().padStart(2, '0');
+  let formattedHour = lapHour.toString().padStart(2, '0');
+
+  return `${formattedHour}:${formattedMin}:${formattedSec}.${formattedMS}`;
 }
 
 function displayLaps() {
-  laps.forEach((lapContainer) => {
+  lapList.innerHTML = '';
+  for (let i = laps.length - 1; i >= 0; i--) {
+    const lapContainer = laps[i].container;
     lapList.appendChild(lapContainer);
+  }
+}
+
+function startLapTimer() {
+  clearInterval(lapTimer);
+  lapTimer = setInterval(() => {
+    lapDuration += 1;
+    const formattedLapTime = formatLapTime(lapDuration);
+    const lapTimeElement = document.querySelector('.lapTime');
+    lapTimeElement.textContent = formattedLapTime;
+    findFastestAndSlowestLapContainers();
+  }, 5); 
+}
+
+
+function stopLapTimer() {
+  clearInterval(lapTimer);
+}
+
+function resetLapDuration() {
+  lapDuration = 0;
+}
+
+function findFastestAndSlowestLapContainers() {
+  if (laps.length === 0) {
+    return {
+      fastestLapContainer: null,
+      slowestLapContainer: null
+    };
+  }
+
+  let fastestLapDuration = laps[0].duration;
+  let fastestLapContainer = laps[0].container;
+  let slowestLapDuration = laps[0].duration;
+  let slowestLapContainer = laps[0].container;
+
+  for (let i = 1; i < laps.length; i++) {
+    if (laps[i].duration < fastestLapDuration) {
+      fastestLapDuration = laps[i].duration;
+      fastestLapContainer = laps[i].container;
+    }
+
+    if (laps[i].duration > slowestLapDuration) {
+      slowestLapDuration = laps[i].duration;
+      slowestLapContainer = laps[i].container;
+    }
+  }
+
+  // Remove existing highlighting classes before adding new ones
+  lapList.querySelectorAll('.fastest-lap, .slowest-lap').forEach((lapContainer) => {
+    lapContainer.classList.remove('fastest-lap', 'slowest-lap');
   });
+
+  // Add classes to highlight the fastest and slowest lap containers
+  fastestLapContainer.classList.add('fastest-lap', 'text-green');
+  slowestLapContainer.classList.add('slowest-lap', 'text-red');
+
+  return {
+    fastestLapContainer,
+    slowestLapContainer
+  };
 }
