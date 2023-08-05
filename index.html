@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles/sidebar.css">
+  <title>Clock</title>
+</head>
+<body class="bg-zinc-800">
+  <h1 class="md:hidden text-white text-xl font-bold pl-2 ml- mt-2 h-40px z-5 absolute whitespace-nowrap top-1 " style="margin-left: 65px;">A Ripoff Clock</h1>
+  <aside class="sidebar float-left flex flex-col sm:bg-zinc-900 absolute top-0 sm:fixed sm:inset-y-0 h-full items-start px-3 md:w-280px md:items-start z-20 w-24px overflow-hidden bg-transparent">
+    <div class="flex items-center">
+      <button class="menu block md:hidden text-white mt-2 hover:bg-zinc-800 py-2 px-2 rounded h-40px">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>      
+      </button>
+      <h1 class="title left-0 relative text-white text-xl font-bold pl-2 mt-2 h-40px z-10">A Ripoff Clock</h1>
+    </div>
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden items-center rounded mt-2 w-full relative sm:flex">
+      <div class="notSelected moduleSelector clockModuleSelector h-4 mr-1 rounded"></div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>  
+      <div class="moduleSelectorText block">
+        Clock
+      </div>
+    </button>
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded items-center mt-1 w-full relative sm:flex">
+      <div class="notSelected moduleSelector timerModuleSelector h-4 mr-1 rounded"></div>
+      <div>
+        <?xml version="1.0" encoding="utf-8"?>
+        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+        <svg class="w-6 h-6 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+        <path d="M20 3H4M20 21H4M5 3C5 5.51022 6.21228 7.86592 8.25493 9.32495L15.7451 14.675C17.7877 16.1341 19 18.4898 19 21M19 3C19 5.51022 17.7877 7.86592 15.7451 9.32495L8.25493 14.675C6.21228 16.1341 5 18.4898 5 21" stroke="#fffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="moduleSelectorText block">
+        Timer
+      </div>
+    </button>
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded mt-1 w-full relative sm:flex">
+      <div class="Selected moduleSelector stopwatchModuleSelector h-4 mr-1 rounded" style="top: 12px;"></div>
+      <div>
+        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+        <svg fill="#ffffff" class="w-6 h-6 mr-1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" stroke-width="0.00024000000000000003">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+        <g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" d="M12,4 C14.0004463,4 15.8484557,4.65266013 17.342709,5.75666121 L17.2928932,5.70710678 C16.9023689,5.31658249 16.9023689,4.68341751 17.2928932,4.29289322 C17.6533772,3.93240926 18.2206082,3.90467972 18.6128994,4.20970461 L18.7071068,4.29289322 L20.7071068,6.29289322 C21.0976311,6.68341751 21.0976311,7.31658249 20.7071068,7.70710678 C20.3466228,8.06759074 19.7793918,8.09532028 19.3871006,7.79029539 L19.2928932,7.70710678 L19.2433388,7.65729102 C20.3473399,9.15154428 21,10.9995537 21,13 C21,17.9705627 16.9705627,22 12,22 C7.02943725,22 3,17.9705627 3,13 C3,8.02943725 7.02943725,4 12,4 Z M12,6 C8.13400675,6 5,9.13400675 5,13 C5,16.8659932 8.13400675,20 12,20 C15.8659932,20 19,16.8659932 19,13 C19,9.13400675 15.8659932,6 12,6 Z M12,8 C12.5522847,8 13,8.44771525 13,9 L13,13 C13,13.5522847 12.5522847,14 12,14 C11.4477153,14 11,13.5522847 11,13 L11,9 C11,8.44771525 11.4477153,8 12,8 Z M15,2 C15.5522847,2 16,2.44771525 16,3 C16,3.55228475 15.5522847,4 15,4 L9,4 C8.44771525,4 8,3.55228475 8,3 C8,2.44771525 8.44771525,2 9,2 L15,2 Z"/> </g>
+        </svg>
+      </div>
+      <div class="moduleSelectorText block">
+        Stopwatch
+      </div>
+    </button>
+  </aside>
+  <main class="flex-1 sm:ml-65px md:ml-280px mt-20">
+    <div class="clock-module hidden">
+      <div class="mx-auto">
+        <div class="clock-container">
+          <time class="currentTime text-4xl text-white font-bold text-center tracking-wide md:text-5xl xl:text-7xl"></time>
+          <div class="date-container text-slate-300 text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
+        </div>
+      </div>
+    </div>
+    <div class="timer-module hidden">
+      <p class="text-white mx-auto">Test</p>
+    </div>
+    <div class="stopwatch-module flex flex-col">
+      <div class="mx-auto">
+        <div class="stopwatchDisplay text-white text-white font-bold text-center tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl flex mb-10">
+          <div>
+            <div class="hour">00</div>
+            <div class="text-3xl text-gray-400">hr</div>
+          </div>
+          <span>:</span>
+          <div>
+            <div class="min">00</div>
+            <div class="text-3xl text-gray-400">min</div>
+          </div>
+          <span>:</span>
+          <div>
+            <div class="sec">00</div>
+            <div class="text-3xl text-gray-400">sec</div>
+          </div>
+          <span>.</span>
+          <div class="ms">00</div>
+        </div>
+        <div class="flex items-center justify-center">
+          <button class="play-stopBtn bg-blue-600 mr-3 rounded-full p-5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="pauseSvg inline w-6 h-6">
+              <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+            </svg>            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="playSvg w-6 h-6 hidden">
+              <path fill-rule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z" clip-rule="evenodd" />
+            </svg>            
+          </button>
+          <button class="lapBtn bg-zinc-800 mr-3 rounded-full p-5 border-2 border-zinc-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="text-white w-6 h-6">
+              <path fill-rule="evenodd" d="M3 2.25a.75.75 0 01.75.75v.54l1.838-.46a9.75 9.75 0 016.725.738l.108.054a8.25 8.25 0 005.58.652l3.109-.732a.75.75 0 01.917.81 47.784 47.784 0 00.005 10.337.75.75 0 01-.574.812l-3.114.733a9.75 9.75 0 01-6.594-.77l-.108-.054a8.25 8.25 0 00-5.69-.625l-2.202.55V21a.75.75 0 01-1.5 0V3A.75.75 0 013 2.25z" clip-rule="evenodd" />
+            </svg>                      
+          </button>
+          <button class="resetBtn bg-zinc-800 rounded-full p-5 border-2 border-zinc-700">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-white">
+              <path fill-rule="evenodd" d="M9.53 2.47a.75.75 0 010 1.06L4.81 8.25H15a6.75 6.75 0 010 13.5h-3a.75.75 0 010-1.5h3a5.25 5.25 0 100-10.5H4.81l4.72 4.72a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z" clip-rule="evenodd" />
+            </svg>            
+          </button>
+        </div>
+      </div>
+      <span class="w-4/5 h-1 bg-zinc-500 my-6 mx-auto rounded"></span>
+      <div class="lapsContainer w-4/5 mx-auto">
+        <div class="lapIfo flex w-full justify-around">
+          <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Laps</div>
+          <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Time Taken</div>
+        </div>
+        <div class="w-full flex justify-around">
+          <div class="errorMessageContainer"></div>
+          <div class="lapList flex flex-col">
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+<script src="scripts/selectModule.js"></script>
+<script src="scripts/show-hideModule.js"></script>
+<script src="scripts/expandSidebar.js"></script>
+<script src="scripts/clockModule.js"></script>
+<script src="scripts/stopwatchModule.js"></script>
+</html>

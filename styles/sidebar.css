@@ -1,0 +1,75 @@
+.sidebar {
+  transition: width .15s, background-color .15s;
+}
+.selectorContainer svg {
+  width: 24px;
+  height: 24px;
+}
+
+.selectorContainer {
+  width: 24px; /* Set a fixed width */
+  transition: width 0.15s ease;
+  overflow: hidden; 
+  white-space: nowrap; 
+}
+.title {
+  transition: margin-left 0.15s ease;
+  white-space: nowrap; 
+}
+.notSelected {
+  width: 3px;
+  position: absolute;
+}
+
+.Selected {
+  width: 3px;
+  position: absolute;
+  left: 3px;
+  background-color: blue;
+}
+
+.pr-180px {
+  padding-right: 180px;
+}
+
+.right-offset-150px {
+  position: absolute; 
+  right: -150px;
+}
+
+.ml-65px {
+  margin-left: 65px;
+}
+
+.h-24px {
+  height: 24px;
+}
+
+.h-40px {
+  height: 40px;
+}
+
+.w-24px {
+  width: 60px;
+}
+.expanded, .selectorContainer {
+  width: 280px;
+}
+
+.expanded .moduleSelectorText {
+  padding-left: 10px;
+}
+
+@media (min-width: 768px) {
+  .md\:w-280px {
+    width: 280px;
+  }
+
+  .md\:right-reset {
+    right: auto;
+  }
+
+  .md\:ml-280px {
+    margin-left: 280px;
+  }
+}
