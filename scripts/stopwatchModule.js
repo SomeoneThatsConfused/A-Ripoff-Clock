@@ -193,7 +193,7 @@ function addMessage(text) {
 
 function noLapsMessage() {
   emptyLapsMessage = document.createElement('div');
-  emptyLapsMessage.textContent = "Nothing to see here press the flag if you wanna see stuff  ¯\\_(ツ)_/¯ ";
+  emptyLapsMessage.textContent = "Nothing to see here press the flag or start the stopwatch if you wanna see stuff  ¯\\_(ツ)_/¯ ";
   emptyLapsMessage.classList.add('mt-5', 'text-zinc-500', 'font-bold', 'text-xl', 'w-2/3', 'text-center', 'mx-auto')
   lapList.appendChild(emptyLapsMessage);
 }
