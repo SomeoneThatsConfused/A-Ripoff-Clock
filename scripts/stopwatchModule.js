@@ -72,7 +72,7 @@ checkLaps();
 isButtonDisabled();
 
 function startStopWatch() {
-  stopWatchInterval = setInterval(updateStopWatch, 10)
+  stopWatchInterval = setInterval(updateStopWatch, 9.96)
   isRunning = true;
 }
 
@@ -266,7 +266,7 @@ function startLapTimer() {
     const lapTimeElement = document.querySelector('.lapTime');
     lapTimeElement.textContent = formattedLapTime;
     findFastestAndSlowestLapContainers();
-  }, 10); 
+  }, 9.96); 
 }
 
 
