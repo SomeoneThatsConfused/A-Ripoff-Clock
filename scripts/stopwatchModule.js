@@ -266,7 +266,7 @@ function startLapTimer() {
     const lapTimeElement = document.querySelector('.lapTime');
     lapTimeElement.textContent = formattedLapTime;
     findFastestAndSlowestLapContainers();
-  }, 5); 
+  }, 10); 
 }
 
 
