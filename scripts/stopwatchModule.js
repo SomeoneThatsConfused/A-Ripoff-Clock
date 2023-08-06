@@ -36,6 +36,8 @@ let isFirstClick = true;
   let emptyLapsMessage;
   let lapTimer;
   let fastestLap;
+  let fastestLapDuration = 0;
+  let slowestLapDuration = 0;
 // Event Listeners ↓
 lapBtn.addEventListener('click', () => {
   addLap();
@@ -72,7 +74,7 @@ checkLaps();
 isButtonDisabled();
 
 function startStopWatch() {
-  stopWatchInterval = setInterval(updateStopWatch, 9.96)
+  stopWatchInterval = setInterval(updateStopWatch, 9.954)
   isRunning = true;
 }
 
@@ -152,6 +154,8 @@ function resetStopWatch() {
   minute = 0;
   hour = 0;
   laps = [];
+  fastestLapDuration = 0;
+  slowestLapDuration = 0;
   lapList.innerHTML = '';
   resetBtn.disabled = true;
   lapBtn.disabled = true;
@@ -266,7 +270,7 @@ function startLapTimer() {
     const lapTimeElement = document.querySelector('.lapTime');
     lapTimeElement.textContent = formattedLapTime;
     findFastestAndSlowestLapContainers();
-  }, 9.96); 
+  }, 9.954); 
 }
 
 
@@ -279,27 +283,34 @@ function resetLapDuration() {
 }
 
 function findFastestAndSlowestLapContainers() {
+  fastestLapDuration = 0;
+  slowestLapDuration = 0;
   if (laps.length === 0) {
     return {
-      fastestLapContainer: null,
+      fastestLapContainer: laps[0].container,
       slowestLapContainer: null
     };
   }
 
-  let fastestLapDuration = laps[0].duration;
+  fastestLapDuration = laps[0].duration;
   let fastestLapContainer = laps[0].container;
-  let slowestLapDuration = laps[0].duration;
+  slowestLapDuration = laps[0].duration;
   let slowestLapContainer = laps[0].container;
 
-  for (let i = 1; i < laps.length; i++) {
-    if (laps[i].duration < fastestLapDuration) {
-      fastestLapDuration = laps[i].duration;
-      fastestLapContainer = laps[i].container;
-    }
-
+  for (let i = 0; i < laps.length; i++) {
     if (laps[i].duration > slowestLapDuration) {
+      slowestLapDuration = 0;
       slowestLapDuration = laps[i].duration;
       slowestLapContainer = laps[i].container;
+      console.log(`Slowest: ${slowestLapDuration}`);
+    }
+  }
+  for (let i = 0; i < laps.length; i++) {
+    if (laps[i].duration < fastestLapContainer) {
+      fastestLapDuration = 0;
+      fastestLapDuration = laps[i].duration;
+      fastestLapContainer = laps[i].container;
+      console.log(`Fastest: ${fastestLapDuration}`);
     }
   }
 
@@ -310,9 +321,9 @@ function findFastestAndSlowestLapContainers() {
   fastestLapContainer.classList.add('fastest-lap');
   slowestLapContainer.classList.remove('text-zinc-300');
   slowestLapContainer.classList.add('slowest-lap');
-
   return {
     fastestLapContainer,
     slowestLapContainer
   };
 }
+  

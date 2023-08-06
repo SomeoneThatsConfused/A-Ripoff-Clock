@@ -1,7 +1,9 @@
 .fastest-lap {
   color: green;
+  transition: color 1s;
 }
 
 .slowest-lap {
   color: red;
+  transition: color 1s;
 }

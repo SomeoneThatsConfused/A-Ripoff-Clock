@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="dist/output.css">
   <link rel="stylesheet" href="styles/sidebar.css">
-  <link rel="stylesheet" href="styles/moduleS" type="text/css" media="all" />
+  <link rel="stylesheet" href="styles/moduleStyles.css" type="text/css" media="all" />
   <title>A Ripoff Clock</title>
 </head>
 <body class="bg-zinc-800">
@@ -19,7 +19,7 @@
       </button>
       <h1 class="title relative text-white text-xl font-bold pl-2 mt-2 h-40px z-10" style="top: 5px">A Ripoff Clock</h1>
     </div>
-    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden items-center rounded mt-2 w-full relative sm:flex">
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden items-center rounded mt-2 relative sm:flex" style="width: 100%;">
       <div class="notSelected moduleSelector clockModuleSelector h-4 mr-1 rounded"></div>
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-6 h-6">
@@ -30,7 +30,7 @@
         Clock [Incomplete]
       </div>
     </button>
-    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded items-center mt-1 w-full relative sm:flex">
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded items-center mt-1 relative sm:flex" style="width: 100%;">
       <div class="notSelected moduleSelector timerModuleSelector h-4 mr-1 rounded"></div>
       <div>
         <?xml version="1.0" encoding="utf-8"?>
@@ -43,7 +43,7 @@
         Timer [No Content]
       </div>
     </button>
-    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded mt-1 w-full relative sm:flex">
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded mt-1 relative sm:flex" style="width: 100%;">
       <div class="Selected moduleSelector stopwatchModuleSelector h-4 mr-1 rounded" style="top: 12px;"></div>
       <div>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -114,11 +114,23 @@
       </div>
       <span class="w-4/5 h-1 bg-zinc-500 my-6 mx-auto rounded"></span>
       <div class="lapsContainer w-4/5 mx-auto">
-        <div class="lapIfo flex w-full justify-around">
-          <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Laps</div>
-          <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Time Taken</div>
+        <div class="lapIfo flex flex-col w-full justify-around">
+          <div class="flex justify-around">
+            <div class="flex flex-col text-2xl font-bold">
+              <div class="fastest-lap">Fastest: </div>
+              <div class="fastestLapDisplay flex justify-center" style="color: green;"></div>
+            </div>
+            <div class="flex flex-col text-2xl font-bold">
+              <div class="slowest-lap">Slowest: </div>
+              <div class="slowestLapDisplay flex justify-center" style="color: red;"></div>
+            </div>
+          </div>
+          <div class="flex justify-around">
+            <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Laps</div>
+            <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Time Taken</div>
+          </div>
         </div>
-        <div class="w-full flex justify-around">
+        <div class="w-full flex justify-around flex-col">
           <div class="errorMessageContainer"></div>
           <div class="lapList flex flex-col w-full"></div>
         </div>
