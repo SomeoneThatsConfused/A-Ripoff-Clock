@@ -303,14 +303,13 @@ function findFastestAndSlowestLapContainers() {
     }
   }
 
-  // Remove existing highlighting classes before adding new ones
   lapList.querySelectorAll('.fastest-lap, .slowest-lap').forEach((lapContainer) => {
     lapContainer.classList.remove('fastest-lap', 'slowest-lap');
   });
-
-  // Add classes to highlight the fastest and slowest lap containers
-  fastestLapContainer.classList.add('fastest-lap', 'text-green');
-  slowestLapContainer.classList.add('slowest-lap', 'text-red');
+  fastestLapContainer.classList.remove('text-zinc-300');
+  fastestLapContainer.classList.add('fastest-lap');
+  slowestLapContainer.classList.remove('text-zinc-300');
+  slowestLapContainer.classList.add('slowest-lap');
 
   return {
     fastestLapContainer,
