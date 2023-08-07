@@ -1,43 +1,43 @@
 //  Variables ↓
 let isFirstClick = true;
-  // timeElapsed Variables ↓
-  let timeElapsed = 0;
-  let millisecond = 0;
-  let second = 0;
-  let minute = 0;
-  let hour = 0;
-  let stopWatchInterval;
-  let isRunning = false;
-  let formattedMS;
-  let formattedSec;
-  let formattedMin ;
-  let formattedHour;
+// timeElapsed Variables ↓
+let timeElapsed = 0;
+let millisecond = 0;
+let second = 0;
+let minute = 0;
+let hour = 0;
+let stopWatchInterval;
+let isRunning = false;
+let formattedMS;
+let formattedSec;
+let formattedMin;
+let formattedHour;
 
 
-  // StopWatch Variables ↓
-  const playStopBtn = document.querySelector('.play-stopBtn');
-  playStopBtn.disabled = false;
-  const resetBtn = document.querySelector('.resetBtn');
-  resetBtn.disabled = true;
-  const lapBtn = document.querySelector('.lapBtn');
-  lapBtn.disabled = true;
-  const pauseSvg = document.querySelector('.pauseSvg');
-  const playSvg = document.querySelector('.playSvg')
-  const hourDisplay = document.querySelector('.hour');
-  const minDisplay = document.querySelector('.min');
-  const secDisplay = document.querySelector('.sec');
-  const msDisplay = document.querySelector('.ms');
+// StopWatch Variables ↓
+const playStopBtn = document.querySelector('.play-stopBtn');
+playStopBtn.disabled = false;
+const resetBtn = document.querySelector('.resetBtn');
+resetBtn.disabled = true;
+const lapBtn = document.querySelector('.lapBtn');
+lapBtn.disabled = true;
+const pauseSvg = document.querySelector('.pauseSvg');
+const playSvg = document.querySelector('.playSvg')
+const hourDisplay = document.querySelector('.hour');
+const minDisplay = document.querySelector('.min');
+const secDisplay = document.querySelector('.sec');
+const msDisplay = document.querySelector('.ms');
 
-  // Lap Variables 
-  const lapList = document.querySelector('.lapList');
-  let lapStartTime = 0;
-  let lapDuration = 0;
-  let laps = [];
-  let emptyLapsMessage;
-  let lapTimer;
-  let fastestLap;
-  let fastestLapDuration = 0;
-  let slowestLapDuration = 0;
+// Lap Variables 
+const lapList = document.querySelector('.lapList');
+let lapStartTime = 0;
+let lapDuration = 0;
+let laps = [];
+let emptyLapsMessage;
+let lapTimer;
+let fastestLap;
+let fastestLapDuration = 0;
+let slowestLapDuration = 0;
 // Event Listeners ↓
 lapBtn.addEventListener('click', () => {
   addLap();
@@ -81,7 +81,7 @@ function startStopWatch() {
 function updateStopWatch() {
   timeElapsed++;
   millisecond++;
-  
+
   formatStopWatch()
 }
 
@@ -90,7 +90,7 @@ function formatStopWatch() {
     second++
     millisecond = 0;
   }
-  
+
   if (second > 59) {
     minute++
     second = 0;
@@ -118,7 +118,7 @@ function formatStopWatch() {
     formattedHour = `0${hour}`
   }
 
-  if ((hour === 99)&&( minute === 59)&&(second === 59)&&(millisecond === 99)) {
+  if ((hour === 99) && (minute === 59) && (second === 59) && (millisecond === 99)) {
     stopStopWatch();
     pauseSvg.classList.remove('hidden');
     playSvg.classList.add('hidden');
@@ -198,9 +198,10 @@ function addMessage(text) {
 function noLapsMessage() {
   emptyLapsMessage = document.createElement('div');
   emptyLapsMessage.textContent = "Nothing to see here press the flag or start the stopwatch if you wanna see stuff  ¯\\_(ツ)_/¯ ";
-  emptyLapsMessage.classList.add('mt-5', 'text-zinc-500', 'font-bold', 'text-sm','md:text-xl', 'w-2/3', 'text-center', 'mx-auto')
+  emptyLapsMessage.classList.add('mt-5', 'text-zinc-500', 'font-bold', 'text-sm', 'md:text-xl', 'w-2/3', 'text-center', 'mx-auto')
   lapList.appendChild(emptyLapsMessage);
 }
+
 function removeLapsMessage() {
   if (emptyLapsMessage) {
     emptyLapsMessage.remove();
@@ -236,7 +237,7 @@ function addLap() {
 
   laps.push({ container: lapContainer, duration: lapDuration });
   displayLaps();
-  
+
   startLapTimer(lapDuration);
 }
 
@@ -269,8 +270,7 @@ function startLapTimer() {
     const formattedLapTime = formatLapTime(lapDuration);
     const lapTimeElement = document.querySelector('.lapTime');
     lapTimeElement.textContent = formattedLapTime;
-    findFastestAndSlowestLapContainers();
-  }, 9.954); 
+  }, 9.954);
 }
 
 
@@ -282,48 +282,6 @@ function resetLapDuration() {
   lapDuration = 0;
 }
 
-function findFastestAndSlowestLapContainers() {
-  fastestLapDuration = 0;
-  slowestLapDuration = 0;
-  if (laps.length === 0) {
-    return {
-      fastestLapContainer: laps[0].container,
-      slowestLapContainer: null
-    };
-  }
-
-  fastestLapDuration = laps[0].duration;
-  let fastestLapContainer = laps[0].container;
-  slowestLapDuration = laps[0].duration;
-  let slowestLapContainer = laps[0].container;
-
-  for (let i = 0; i < laps.length; i++) {
-    if (laps[i].duration > slowestLapDuration) {
-      slowestLapDuration = 0;
-      slowestLapDuration = laps[i].duration;
-      slowestLapContainer = laps[i].container;
-      console.log(`Slowest: ${slowestLapDuration}`);
-    }
-  }
-  for (let i = 0; i < laps.length; i++) {
-    if (laps[i].duration < fastestLapContainer) {
-      fastestLapDuration = 0;
-      fastestLapDuration = laps[i].duration;
-      fastestLapContainer = laps[i].container;
-      console.log(`Fastest: ${fastestLapDuration}`);
-    }
-  }
-
-  lapList.querySelectorAll('.fastest-lap, .slowest-lap').forEach((lapContainer) => {
-    lapContainer.classList.remove('fastest-lap', 'slowest-lap');
-  });
-  fastestLapContainer.classList.remove('text-zinc-300');
-  fastestLapContainer.classList.add('fastest-lap');
-  slowestLapContainer.classList.remove('text-zinc-300');
-  slowestLapContainer.classList.add('slowest-lap');
-  return {
-    fastestLapContainer,
-    slowestLapContainer
-  };
-}
+function sortLaps() {
   
+}

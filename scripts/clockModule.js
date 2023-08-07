@@ -51,8 +51,9 @@ function getTime() {
   let dayOfMonth = date.getDate();
   let month = date.getMonth();
   let year = date.getFullYear();
+  let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
-  dateContainer.textContent = `${daysIndexMap[weekday]}, ${dayOfMonth} ${monthIndexMap[month]} ${year}`
-}
+  dateContainer.textContent = `${daysIndexMap[weekday]}, ${monthIndexMap[dayOfMonth]} ${dayOfMonth}, ${year} ${timezone}`
+} 
 
 setInterval(getTime, 1000);

@@ -20,7 +20,7 @@
       <h1 class="title relative text-white text-xl font-bold pl-2 mt-2 h-40px z-10" style="top: 5px">A Ripoff Clock</h1>
     </div>
     <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden items-center rounded mt-2 relative sm:flex" style="width: 100%;">
-      <div class="notSelected moduleSelector clockModuleSelector h-4 mr-1 rounded"></div>
+      <div class="Selected moduleSelector clockModuleSelector h-4 mr-1 rounded"></div>
       <div>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -44,7 +44,7 @@
       </div>
     </button>
     <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded mt-1 relative sm:flex" style="width: 100%;">
-      <div class="Selected moduleSelector stopwatchModuleSelector h-4 mr-1 rounded" style="top: 12px;"></div>
+      <div class="notSelected moduleSelector stopwatchModuleSelector h-4 mr-1 rounded" style="top: 12px;"></div>
       <div>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
         <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
@@ -60,10 +60,10 @@
     </button>
   </aside>
   <main class="flex-1 sm:ml-65px md:ml-280px mt-20">
-    <div class="clock-module hidden">
+    <div class="clock-module flex">
       <div class="mx-auto">
         <div class="clock-container">
-          <time class="currentTime text-4xl text-white font-bold text-center tracking-wide md:text-5xl xl:text-7xl"></time>
+          <time class="currentTime text-4xl text-white font-bold  tracking-wide md:text-5xl xl:text-7xl"></time>
           <div class="date-container text-slate-300 text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
         </div>
       </div>
@@ -71,7 +71,7 @@
     <div class="timer-module hidden">
       <p class="text-white mx-auto text-center">Under Construction come back later or in a month :)</p>
     </div>
-    <div class="stopwatch-module flex flex-col">
+    <div class="stopwatch-module hidden flex-col">
       <div class="mx-auto">
         <div class="stopwatchDisplay text-white text-white font-bold text-center tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl flex mb-10">
           <div>
@@ -116,15 +116,16 @@
       <div class="lapsContainer w-4/5 mx-auto">
         <div class="lapIfo flex flex-col w-full justify-around">
           <div class="flex justify-around">
-            <div class="flex flex-col text-2xl font-bold">
-              <div class="fastest-lap">Fastest: </div>
-              <div class="fastestLapDisplay flex justify-center" style="color: green;"></div>
+            <div class="flex flex-col font-bold">
+              <div class="fastest-lap text-xl">Fastest: </div>
+              <div class="fastestLapDisplay flex justify-center text-lg" style="color: green;">Not Available</div>
             </div>
-            <div class="flex flex-col text-2xl font-bold">
-              <div class="slowest-lap">Slowest: </div>
-              <div class="slowestLapDisplay flex justify-center" style="color: red;"></div>
+            <div class="flex flex-col font-bold">
+              <div class="slowest-lap text-xl">Slowest: </div>
+              <div class="slowestLapDisplay flex justify-center text-lg" style="color: red;"></div>
             </div>
           </div>
+           <span class="w-4/5 h-1 bg-zinc-500 my-6 mx-auto rounded" style="width: 100%"></span>
           <div class="flex justify-around">
             <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Laps</div>
             <div class="text-white font-bold text-xl md:text-2xl lg:text-3xl">Time Taken</div>
