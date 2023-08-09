@@ -1,3 +1,10 @@
+.text-2xs {
+  font-size: 12px;
+}
+
+.text-3xs {
+  font-size: 10px;
+}
 @media (min-width: 640px) {
   .sm\:ml-65px {
     margin-left: 65px;
