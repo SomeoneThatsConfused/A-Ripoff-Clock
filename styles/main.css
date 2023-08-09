@@ -1,0 +1,32 @@
+@media (min-width: 640px) {
+  .sm\:ml-65px {
+    margin-left: 65px;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:ml-280px {
+    margin-left: 280px;
+  }
+}
+
+.world-clocks {
+  margin-top: 2em;
+}
+.clock-timezone {
+  position: relative;
+  top: -.5em;
+  left: -.75em;
+}
+
+.main-time-title {
+  display: flex;
+  place-self: start;
+  position: relative;
+  top: -1em;
+  left: -.75em;
+}
+
+.clock-info {
+  transform: translateY(-0.3em);
+}
