@@ -37,3 +37,65 @@
 .clockMainContent {
   transform: translateY(-0.3em);
 }
+
+.edit-container {
+  display: flex;
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+}
+
+.delete-btn {
+  border-radius: 20%;
+  position: absolute;
+  left: 0.5em;
+  height: 1.50em;
+  width: 24px;
+  transition: width .15s;
+  z-index: 20;
+}
+
+.overlay {
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+  inset: 0;
+}
+
+.prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #182530;
+  border: 1px solid rgb(37, 99, 235);
+  border-radius: 10px;
+  padding: 1em;
+  z-index: 30;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  width: 300px;
+}
+
+.noBtn, .yesBtn {
+  background-color: rgb(24, 24, 27);
+  border-radius: 5px;
+  padding: .30em 0.50em;
+}
+
+.noBtn {
+  margin-left: 1em;
+}
+
+.promptOptions {
+  display: flex;
+  margin-top: 1em;
+}
