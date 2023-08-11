@@ -189,6 +189,7 @@ function addMessage(text) {
   messageContainer.classList.add('bg-zinc-900', 'text-white', 'bold', 'p-3', 'absolute', 'rounded-lg');
   messageContainer.style.top = '10px';
   messageContainer.style.right = '10px';
+  messageContainer.style.opacity = '0.8';
   document.body.appendChild(messageContainer);
   setInterval(() => {
     messageContainer.remove();
@@ -283,5 +284,5 @@ function resetLapDuration() {
 }
 
 function sortLaps() {
-  
+  // To be Added 
 }

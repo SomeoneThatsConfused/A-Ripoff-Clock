@@ -1,9 +1,9 @@
 .text-2xs {
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .text-3xs {
-  font-size: 10px;
+  font-size: 13px;
 }
 @media (min-width: 640px) {
   .sm\:ml-65px {
@@ -20,7 +20,7 @@
 .world-clocks {
   margin-top: 2em;
 }
-.clock-timezone {
+.clockExtraInfo {
   position: relative;
   top: -.5em;
   left: -.75em;
@@ -34,6 +34,6 @@
   left: -.75em;
 }
 
-.clock-info {
+.clockMainContent {
   transform: translateY(-0.3em);
 }

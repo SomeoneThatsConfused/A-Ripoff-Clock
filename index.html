@@ -67,30 +67,22 @@
   <main class="w-full sm:ml-65px md:ml-280px mt-20">
     <div class="flex flex-col justify-items-center" style="margin-left: 20%; margin-right: 20%;">
       <div class="clock-module flex flex-col place-content-center justify-items-center">
-        <div class="clock-container flex flex-col items-center bg-zinc-900 rounded-lg p-3 w-4/5">
+        <div class="clock-container flex flex-col items-center bg-zinc-900 rounded-lg p-3 w-full">
           <h1 class="main-time-title  text-white font-bold relative whitespace-nowrap text-xl bg-blue-600 px-2 rounded-lg">Current Time</h1>
-          <time class="currentTime text-4xl text-white font-bold tracking-wide md:text-5xl xl:text-7xl"></time>
-          <div class="date-container text-slate-300 text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
+          <time class="currentTime text-4xl text-white font-bold tracking-wide md:text-5xl xl:text-7xl whitespace-nowrap"></time>
+          <div class="date-container text-slate-300 text-xl sm:text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
         </div>
-        <div class="world-clocks mt-8 flex flex-col text-white font-bold text-2xl w-4/5">
-          <h1 class="relative flex justify-self-start w-full">World Clocks</h1>
-          <div class="clock-list w-full">
-            <div class="clock-container mt-5 bg-zinc-900 rounded-lg px-3">
-              <h1 class="clock-timezone px-2 bg-blue-600 rounded-lg whitespace-nowrap text-lg sm:text-xl" style="width: min-content;">Timezone +12hr</h1>
-              <div class="clock-info flex justify-around text-2xs sm:text-2xl md:text-3xl">
-                <div>00:00:00 am</div>
-                <div>GMT</div>
-              </div>
-            </div>
-          </div>
+        <div class="world-clocks mt-8 flex flex-col text-white font-bold text-2xl w-full">
+          <h1 class="relative flex justify-self-start w-full" style="margin-bottom: 1em;">World Clock</h1>
+          <div class="clock-list w-full"></div>
         </div>
-        <div class="edit-container fixed flex bg-zinc-900 text-white px-2 py-2 rounded-lg justify-between" style="width: 70px; bottom: 10px; right: 10px;">
-          <button class="add-clock">
+        <div class="edit-container fixed flex bg-zinc-900 text-white px-2 py-2 rounded-lg justify-between" style="width: min-content;">
+          <button class="add-clock hover:bg-zinc-800 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
           </button>
-          <button class="delete-clock">
+          <button class="delete-clock hover:bg-zinc-800 rounded">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
             </svg>
