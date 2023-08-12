@@ -1,20 +1,20 @@
-// Variables
-const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="delete-icon">
+const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="delete-icon" aria-label="Delete">
 <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
 </svg>
 `;
-const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-label="Copy">
 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
 </svg>
 `;
+
 let askToDel = true;
 const clockList = document.querySelector(".clock-list");
 const addClockBtn = document.querySelector(".add-clock");
-const showDeleteBtn = document.querySelector(".show-deleteBtn");
+const editBtn = document.querySelector(".editBtn");
 addClock.disabled = false;
-showDeleteBtn.disabled = true;
-// Date Index
+editBtn.disabled = true;
 
+// Date Index
 const daysIndexMap = {
   0: "Sunday",
   1: "Monday",
@@ -39,11 +39,13 @@ const monthIndexMap = {
   10: "November",
   11: "December",
 };
+
 // Event Listeners
 addClockBtn.addEventListener("click", addClock);
-showDeleteBtn.addEventListener("click", showDeleteIcons);
+editBtn.addEventListener("click", showEditIcons);
 clockList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-icon")) {
+    console.log("working");
     const clockContainer = event.target.closest(".clock-container");
     if (askToDel) {
       showPrompt((shouldDelete) => {
@@ -58,6 +60,7 @@ clockList.addEventListener("click", (event) => {
     }
   }
 });
+
 // Functions
 clockEmpty();
 
@@ -75,6 +78,7 @@ function showPrompt(callback) {
   noteText.style.fontSize = ".7em";
   ignorePromptBox.type = "checkbox";
   ignorePromptBox.id = "ignoreCheckbox";
+  ignorePromptBox.setAttribute("aria-label", "Do not show this prompt again");
   labelText.textContent = "Don't ask me again.";
   noteText.textContent = "(can be changed in the settings *not yet available)";
   labelText.style.fontSize = ".8em";
@@ -90,6 +94,7 @@ function showPrompt(callback) {
   optionContainer.appendChild(noBtn);
 
   container.textContent = message;
+  container.setAttribute("role", "dialog");
 
   optionContainer.classList.add("promptOptions");
   yesBtn.classList.add("yesBtn");
@@ -97,15 +102,20 @@ function showPrompt(callback) {
   overlay.classList.add("overlay");
   overlay.style.display = "flex";
   container.classList.add("prompt");
+  container.style.zIndex = "40";
   container.appendChild(ignorePromptContainer);
   container.appendChild(optionContainer);
   overlay.append(container);
   document.body.appendChild(overlay);
 
   yesBtn.addEventListener("click", () => {
+    if (ignorePromptBox.checked) {
+      askToDel = false;
+    }
     overlay.style.display = "none";
     callback(true);
   });
+
   noBtn.addEventListener("click", () => {
     overlay.style.display = "none";
     return;
@@ -113,10 +123,15 @@ function showPrompt(callback) {
 
   ignorePromptBox.addEventListener("change", () => {
     if (ignorePromptBox.checked) {
-      askToDel = false;
       noBtn.disabled = true;
     } else {
       noBtn.disabled = false;
+    }
+  });
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      overlay.style.display = "none";
     }
   });
 }
@@ -124,12 +139,16 @@ function showPrompt(callback) {
 function getTime() {
   const currentTime = document.querySelector(".currentTime");
   const dateContainer = document.querySelector(".date-container");
-  let timezone = "Asia/Manila"; 
   const date = new Date();
-
+  let location = Intl.DateTimeFormat().resolvedOptions().timeZone;
   // Current Time
 
-  const options = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true, timeZone: timezone }; 
+  const options = {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+  };
   const formattedTime = date.toLocaleTimeString("en-US", options);
 
   currentTime.textContent = formattedTime;
@@ -139,19 +158,19 @@ function getTime() {
   let month = date.getMonth();
   let year = date.getFullYear();
 
-  dateContainer.textContent = `${daysIndexMap[weekday]}, ${monthIndexMap[month]} ${dayOfMonth}, ${year} ${timezone}`;
+  dateContainer.textContent = `${daysIndexMap[weekday]}, ${monthIndexMap[month]} ${dayOfMonth}, ${year} ${location}`;
 }
 
 setInterval(getTime, 1000);
 
 function addClock() {
-  showDeleteBtn.disabled = false;
+  editBtn.disabled = false;
   isButtonDisabled();
   createClock();
   clockEmpty();
 }
 
-function showDeleteIcons() {
+function showEditIcons() {
   isButtonDisabled();
   const deleteBtns = document.querySelectorAll(".delete-btn");
   deleteBtns.forEach((btn) => {
@@ -188,11 +207,11 @@ function createClock(timezone) {
 
   // Container Stylings
   newClockLocation.style.fontSize = "0.75em";
-  newClockLocation.style.width = '50%';
-  newClockLocation.style.textAlign = 'start';
-  newClockLocation.style.marginLeft = '5%';
-  newClockTime.style.width = '50%';
-  newClockTime.style.textAlign = 'center';
+  newClockLocation.style.width = "50%";
+  newClockLocation.style.textAlign = "start";
+  newClockLocation.style.marginLeft = "5%";
+  newClockTime.style.width = "50%";
+  newClockTime.style.textAlign = "center";
   upperContainer.classList.add("flex", "justify-between", "w-full");
   copyBtn.innerHTML = copyIcon;
   copyBtn.classList.add(
@@ -212,7 +231,7 @@ function createClock(timezone) {
   removeBtn.style.backgroundColor = "red";
   newClockContainer.classList.add(
     "clock-container",
-    "mt-5",
+    "mt-2",
     "bg-zinc-900",
     "rounded-lg",
     "px-3"
@@ -235,6 +254,7 @@ function createClock(timezone) {
     "sm:text-xl"
   );
   clockAddInfo.style.width = "min-content";
+  removeBtn.setAttribute("aria-label", "Remove clock");
 
   // Add Clock Content
 
@@ -257,6 +277,7 @@ function createClock(timezone) {
   };
 
   removeBtn.innerHTML = deleteIcon;
+  removeBtn.setAttribute("aria-label", "Remove clock");
   upperContainer.appendChild(clockAddInfo);
   upperContainer.appendChild(copyBtn);
   newClockTime.textContent = clockTime;

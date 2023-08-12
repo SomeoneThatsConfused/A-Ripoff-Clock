@@ -18,10 +18,10 @@ function isButtonDisabled() {
     addClockBtn.removeAttribute("style");
   }
 
-  if (showDeleteBtn.disabled) {
-    showDeleteBtn.style.backgroundColor = "#353535";
+  if (editBtn.disabled) {
+    editBtn.style.color = "#353535";
   } else {
-    showDeleteBtn.removeAttribute("style");
+    editBtn.style.color = 'white';
   }
 }
 

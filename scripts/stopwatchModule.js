@@ -16,12 +16,17 @@ let formattedHour;
 // StopWatch Variables ↓
 const playStopBtn = document.querySelector(".play-stopBtn");
 playStopBtn.disabled = false;
+playStopBtn.setAttribute("aria-label", "Start or pause stopwatch");
 const resetBtn = document.querySelector(".resetBtn");
 resetBtn.disabled = true;
+resetBtn.setAttribute("aria-label", "Reset stopwatch");
 const lapBtn = document.querySelector(".lapBtn");
 lapBtn.disabled = true;
+lapBtn.setAttribute("aria-label", "Add lap");
 const pauseSvg = document.querySelector(".pauseSvg");
+pauseSvg.setAttribute("aria-hidden", "true");
 const playSvg = document.querySelector(".playSvg");
+playSvg.setAttribute("aria-hidden", "true");
 const hourDisplay = document.querySelector(".hour");
 const minDisplay = document.querySelector(".min");
 const secDisplay = document.querySelector(".sec");
@@ -37,6 +42,7 @@ let lapTimer;
 let fastestLap;
 let fastestLapDuration = 0;
 let slowestLapDuration = 0;
+
 // Event Listeners ↓
 lapBtn.addEventListener("click", () => {
   addLap();
