@@ -3,12 +3,13 @@ const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
 <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
 </svg>
 `
+let askToDel = true;
 const clockList = document.querySelector('.clock-list');
 const addClockBtn = document.querySelector('.add-clock');
 const showDeleteBtn = document.querySelector('.show-deleteBtn');
 addClock.disabled = false;
 showDeleteBtn.disabled = true;
-  // Date Index
+// Date Index
 
 const daysIndexMap = {
   0: "Sunday",
@@ -39,13 +40,18 @@ addClockBtn.addEventListener('click', addClock);
 showDeleteBtn.addEventListener('click', showDeleteIcons);
 clockList.addEventListener('click', event => {
   if (event.target.classList.contains('delete-icon')) {
-    showPrompt(shouldDelete => {
-      if (shouldDelete) {
-        const clockContainer = event.target.closest('.clock-container');
-        clockContainer.remove();
-        clockEmpty();
-      }
-    });
+    const clockContainer = event.target.closest('.clock-container');
+    if (askToDel) {
+      showPrompt(shouldDelete => {
+        if (shouldDelete) {
+          clockContainer.remove();
+          clockEmpty();
+        }
+      });
+    } else {
+      clockContainer.remove();
+      clockEmpty();
+    }
   }
 })
 // Functions
@@ -57,34 +63,60 @@ function showPrompt(callback) {
   const optionContainer = document.createElement('div');
   const yesBtn = document.createElement('button');
   const noBtn = document.createElement('button');
-  
+  const ignorePromptContainer = document.createElement('div');
+  const ignorePromptBox = document.createElement('input');
+  const ignorePrompText = document.createElement('div');
+  const labelText = document.createElement('label');
+  const noteText = document.createElement('span');
+  noteText.style.display = 'block';
+  noteText.style.fontSize = '.7em';
+  ignorePromptBox.type = 'checkbox';
+  ignorePromptBox.id = 'ignoreCheckbox';
+  labelText.textContent = "Don't ask me again.";
+  noteText.textContent = "(can be changed in the settings *not yet available)"
+  labelText.style.fontSize = '.8em'
+  labelText.setAttribute('for', 'ignoreCheckbox')
+  ignorePromptContainer.appendChild(ignorePromptBox);
+  ignorePromptContainer.appendChild(labelText);
+  ignorePromptContainer.appendChild(noteText);
   const message = 'Are you sure you want to remove this clock? (You can add it back)';
   yesBtn.textContent = 'Yes';
   noBtn.textContent = 'No';
   optionContainer.appendChild(yesBtn);
   optionContainer.appendChild(noBtn);
-  
-  container.textContent = message;
 
+  container.textContent = message;
+  
   optionContainer.classList.add('promptOptions');
   yesBtn.classList.add('yesBtn');
   noBtn.classList.add('noBtn')
   overlay.classList.add('overlay');
   overlay.style.display = 'flex';
   container.classList.add('prompt');
+  container.appendChild(ignorePromptContainer);
   container.appendChild(optionContainer);
   overlay.append(container);
   document.body.appendChild(overlay);
-
+  
   yesBtn.addEventListener('click', () => {
     overlay.style.display = 'none';
-    callback(true) ;
+    callback(true);
   });
   noBtn.addEventListener('click', () => {
     overlay.style.display = 'none';
-    callback(false) ;
+    return;
   });
+  
+  ignorePromptBox.addEventListener('change', () => {
+    if (ignorePromptBox.checked) {
+      askToDel = false;
+      noBtn.disabled = true;
+    } else {
+      noBtn.disabled = false;
+    }
+  })
 }
+
 function getTime() {
   const currentTime = document.querySelector('.currentTime');
   const dateContainer = document.querySelector('.date-container');
@@ -94,7 +126,7 @@ function getTime() {
   let hour = date.getHours();
   let minute = date.getMinutes();
   let second = date.getSeconds();
-  
+
   let ampm = hour >= 12 ? 'pm' : 'am';
 
   hour = hour % 12;
@@ -111,7 +143,7 @@ function getTime() {
   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
   dateContainer.textContent = `${daysIndexMap[weekday]}, ${monthIndexMap[month]} ${dayOfMonth}, ${year} ${timezone}`
-} 
+}
 
 setInterval(getTime, 1000);
 
@@ -133,6 +165,7 @@ function showDeleteIcons() {
     }
   })
 }
+
 function removeClock(container) {
   isButtonDisabled();
   container.remove();
@@ -145,7 +178,7 @@ function createClock() {
   const day = 'Today';
   const hrDifference = '+0HRS';
   const clockTime = '00:00:00';
-    // Create Element
+  // Create Element
   const removeBtn = document.createElement('button');
   const newClockContainer = document.createElement('div');
   const clockAddInfo = document.createElement('div');
@@ -161,7 +194,7 @@ function createClock() {
   clockMainContent.classList.add('clockMainContent', 'flex', 'justify-around', 'text-xl', 'md:text-3xl');
   clockAddInfo.classList.add('clockExtraInfo', 'px-2', 'bg-blue-600', 'rounded-lg', 'whitespace-nowrap', 'text-lg', 'sm:text-xl');
   clockAddInfo.style.width = 'min-content';
-  
+
   // Add Clock Content
   removeBtn.innerHTML = deleteIcon;
   clockAddInfo.textContent = `${day}, ${hrDifference}`;
