@@ -3,6 +3,10 @@ const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" 
 <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd" />
 </svg>
 `;
+const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+</svg>
+`;
 let askToDel = true;
 const clockList = document.querySelector(".clock-list");
 const addClockBtn = document.querySelector(".add-clock");
@@ -65,7 +69,6 @@ function showPrompt(callback) {
   const noBtn = document.createElement("button");
   const ignorePromptContainer = document.createElement("div");
   const ignorePromptBox = document.createElement("input");
-  const ignorePrompText = document.createElement("div");
   const labelText = document.createElement("label");
   const noteText = document.createElement("span");
   noteText.style.display = "block";
@@ -121,27 +124,20 @@ function showPrompt(callback) {
 function getTime() {
   const currentTime = document.querySelector(".currentTime");
   const dateContainer = document.querySelector(".date-container");
-  let date = new Date();
+  let timezone = "Asia/Manila"; 
+  const date = new Date();
 
   // Current Time
-  let hour = date.getHours();
-  let minute = date.getMinutes();
-  let second = date.getSeconds();
 
-  let ampm = hour >= 12 ? "pm" : "am";
+  const options = { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true, timeZone: timezone }; 
+  const formattedTime = date.toLocaleTimeString("en-US", options);
 
-  hour = hour % 12;
-  hour = hour === 0 || hour === 12 ? 12 : hour;
-  minute = minute < 10 ? "0" + minute : minute;
-  second = second < 10 ? "0" + second : second;
-
-  currentTime.textContent = `${hour}:${minute}:${second} ${ampm}`;
+  currentTime.textContent = formattedTime;
 
   let weekday = date.getDay();
   let dayOfMonth = date.getDate();
   let month = date.getMonth();
   let year = date.getFullYear();
-  let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   dateContainer.textContent = `${daysIndexMap[weekday]}, ${monthIndexMap[month]} ${dayOfMonth}, ${year} ${timezone}`;
 }
@@ -173,20 +169,43 @@ function removeClock(container) {
   clockEmpty();
 }
 
-function createClock() {
+function createClock(timezone) {
   // Declaration of Variables
-  const location = "No Location Set";
-  const day = "Today";
-  const hrDifference = "+0HRS";
+  let hrDifference;
+  let day;
+  const location = timezone;
   const clockTime = "00:00:00";
-  // Create Element
+
+  // Create Elements
   const removeBtn = document.createElement("button");
-  const newClockContainer = document.createElement("div");
+  const newClockContainer = document.createElement("article");
   const clockAddInfo = document.createElement("div");
   const clockMainContent = document.createElement("div");
   const newClockTime = document.createElement("div");
   const newClockLocation = document.createElement("div");
+  const upperContainer = document.createElement("div");
+  const copyBtn = document.createElement("button");
+
   // Container Stylings
+  newClockLocation.style.fontSize = "0.75em";
+  newClockLocation.style.width = '50%';
+  newClockLocation.style.textAlign = 'start';
+  newClockLocation.style.marginLeft = '5%';
+  newClockTime.style.width = '50%';
+  newClockTime.style.textAlign = 'center';
+  upperContainer.classList.add("flex", "justify-between", "w-full");
+  copyBtn.innerHTML = copyIcon;
+  copyBtn.classList.add(
+    "copyIcon",
+    "px-2",
+    "hover:bg-zinc-800",
+    "rounded-lg",
+    "text-lg",
+    "sm:text-xl",
+    "mt-1",
+    "h-6"
+  );
+  clockAddInfo.style.width = "min-content";
   removeBtn.classList.add("delete-btn");
   removeBtn.style.width = "0px";
   removeBtn.style.transform = "translateX(-1em)";
@@ -203,7 +222,8 @@ function createClock() {
     "flex",
     "justify-around",
     "text-xl",
-    "md:text-3xl"
+    "md:text-3xl",
+    "mx-auto"
   );
   clockAddInfo.classList.add(
     "clockExtraInfo",
@@ -217,16 +237,62 @@ function createClock() {
   clockAddInfo.style.width = "min-content";
 
   // Add Clock Content
+
+  const updateTime = () => {
+    const now = new Date();
+    const options = { timeZone: timezone, hour: "2-digit", minute: "2-digit" };
+    const formattedTime = now.toLocaleTimeString("en-US", options);
+    newClockTime.textContent = formattedTime;
+
+    const localHours = new Date().getHours();
+    const targetHours = Number(formattedTime.slice(0, 2));
+    hrDifference = `${targetHours - localHours} HRs`;
+    const absHrDifference = Math.abs(targetHours - localHours);
+    if (absHrDifference > 12) {
+      day = localHours > targetHours ? "Yesterday" : "Tomorrow";
+    } else {
+      day = "Today";
+    }
+    clockAddInfo.textContent = `${day}, ${hrDifference}`;
+  };
+
   removeBtn.innerHTML = deleteIcon;
-  clockAddInfo.textContent = `${day}, ${hrDifference}`;
+  upperContainer.appendChild(clockAddInfo);
+  upperContainer.appendChild(copyBtn);
   newClockTime.textContent = clockTime;
   newClockLocation.textContent = location;
   clockMainContent.appendChild(removeBtn);
   clockMainContent.appendChild(newClockLocation);
   clockMainContent.appendChild(newClockTime);
-  newClockContainer.appendChild(clockAddInfo);
+  newClockContainer.appendChild(upperContainer);
   newClockContainer.appendChild(clockMainContent);
   clockList.appendChild(newClockContainer);
+
+  updateTime();
+  setInterval(updateTime, 1000);
+  copyBtn.addEventListener("click", () => {
+    const combinedCopyText = `Time: ${newClockTime.textContent} \nLocation: ${location}\nhr difference: ${hrDifference}`;
+    const textArea = document.createElement("div");
+    textArea.value = combinedCopyText;
+    copyClockInfo(copyBtn, combinedCopyText);
+  });
+}
+
+function copyClockInfo(btn, combinedCopyText) {
+  navigator.clipboard
+    .writeText(combinedCopyText)
+    .then(() => {
+      btn.textContent = "Copied!";
+      setTimeout(function () {
+        btn.innerHTML = copyIcon;
+      }, 1000);
+    })
+    .catch((error) => {
+      btn.textContent = `Copy Failed: ${error}`;
+      setTimeout(function () {
+        btn.innerHTML = copyIcon;
+      }, 1000);
+    });
 }
 
 function clockEmpty() {

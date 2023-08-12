@@ -12,7 +12,7 @@
 </head>
 
 <body class="bg-zinc-800">
-  <h1 class="md:hidden text-white text-xl font-bold pl-2 ml- mt-2 h-40px z-5 absolute whitespace-nowrap top-1 " style="margin-left: 65px; top: 5px">A Ripoff Clock</h1>
+  <h1 class="md:hidden text-white text-xl font-bold pl-2 ml- mt-2 h-40px z-5 absolute whitespace-nowrap top-1 " style="margin-left: 65px; top: 5px;">A Ripoff Clock</h1>
   <aside class="sidebar float-left flex flex-col sm:bg-zinc-900 absolute top-0 sm:fixed sm:inset-y-0 h-full items-start px-3 md:w-280px md:items-start z-20 w-24px overflow-hidden bg-transparent">
     <div class="flex items-center">
       <button class="menu block md:hidden text-white mt-2 hover:bg-zinc-800 py-2 px-2 rounded h-40px">
@@ -63,39 +63,50 @@
         Stopwatch
       </div>
     </button>
-  </aside>
-  <main class="z-20 sm:ml-65px md:ml-280px mt-20 flex justify-center relative">
-    <div class="flex flex-col mx-auto" style="width: 90%;">
-      <div class="clock-module flex flex-col place-content-center justify-items-center">
-        <div class="clock-container flex flex-col items-center bg-zinc-900 rounded-lg p-3 w-full">
-          <h1 class="main-time-title  text-white font-bold relative whitespace-nowrap text-xl bg-blue-600 px-2 rounded-lg">Current Time</h1>
-          <time class="currentTime text-4xl text-white font-bold tracking-wide md:text-5xl xl:text-7xl whitespace-nowrap"></time>
-          <div class="date-container text-slate-300 text-xl sm:text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
-        </div>
-        <div class="world-clocks mt-8 flex flex-col text-white font-bold text-2xl w-full">
-          <h1 class="relative flex justify-self-start w-full" style="margin-bottom: 1em;">World Clock</h1>
-          <div class="clock-list w-full"></div>
-        </div>
-        <div class="edit-container flex bg-zinc-900 text-white px-2 py-2 rounded-lg justify-between" style="width: min-content;">
-          <button class="add-clock hover:bg-zinc-800 rounded">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-          </button>
-          <button class="show-deleteBtn hover:bg-zinc-800 rounded">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-            </svg>
-          </button>
-        </div>
+
+    <button class="selectorContainer text-white hover:bg-zinc-800 py-2 pl-2 hidden rounded mt-1 relative sm:flex" style="width: 100%;">
+      <div class="notSelected moduleSelector settingsModuleSelector h-4 mr-1 rounded" style="top: 12px;"></div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>        
       </div>
-    </div>    
+      <div class="moduleSelectorText block">
+        Settings
+      </div>
+    </button>
+  </aside>
+  <main class="z-10 sm:ml-65px md:ml-280px mt-20 flex justify-center relative">
+    <div class="clock-module mx-auto flex flex-col place-content-center justify-items-center" style="width: 90%;">
+      <div class="clock-container flex flex-col items-center bg-zinc-900 rounded-lg p-3 w-full">
+        <h1 class="main-time-title  text-white font-bold relative whitespace-nowrap text-xl bg-blue-600 px-2 rounded-lg">Current Time</h1>
+        <time class="currentTime text-4xl text-white font-bold tracking-wide md:text-5xl xl:text-7xl whitespace-nowrap"></time>
+        <div class="date-container text-slate-300 text-xl sm:text-2xl md:text-3xl xl:text-4xl text-center mt-1"></div>
+      </div>
+      <div class="world-clocks mt-8 flex flex-col text-white font-bold text-2xl w-full">
+        <h1 class="relative flex justify-self-start w-full" style="margin-bottom: 1em;">World Clock</h1>
+        <div class="clock-list w-full"></div>
+      </div>
+      <div class="edit-container flex bg-zinc-900 text-white px-2 py-2 rounded-lg justify-between" style="width: min-content;">
+        <button class="add-clock hover:bg-zinc-800 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+        </button>
+        <button class="show-deleteBtn hover:bg-zinc-800 rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+          </svg>
+        </button>
+      </div>
+    </div>
             
     </div>
-    <div class="timer-module hidden">
+    <div class="timer-module mx-auto hidden" style="width: 90%;">
       <p class="text-white mx-auto text-center">Under Construction come back later or in a month :)</p>
     </div>
-    <div class="stopwatch-module hidden flex-col mx-auto">
+    <div class="stopwatch-module hidden flex-col mx-auto" style="width: 90%;">
       <div class="mx-auto">
         <div class="stopwatchDisplay text-white text-white font-bold text-center tracking-wide text-4xl sm:text-5xl md:text-6xl lg:text-8xl xl:text-9xl flex mb-10">
           <div>
