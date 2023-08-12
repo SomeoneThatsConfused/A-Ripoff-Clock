@@ -1,5 +1,5 @@
 .sidebar {
-  transition: width .15s, background-color .15s;
+  transition: width 0.15s, background-color 0.15s;
 }
 .selectorContainer svg {
   width: 24px;
@@ -9,12 +9,12 @@
 .selectorContainer {
   width: 24px; /* Set a fixed width */
   transition: width 0.15s ease;
-  overflow: hidden; 
-  white-space: nowrap; 
+  overflow: hidden;
+  white-space: nowrap;
 }
 .title {
   transition: margin-left 0.15s ease;
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 .notSelected {
   width: 3px;
@@ -33,7 +33,7 @@
 }
 
 .right-offset-150px {
-  position: absolute; 
+  position: absolute;
   right: -150px;
 }
 
@@ -52,7 +52,8 @@
 .w-24px {
   width: 60px;
 }
-.expanded, .selectorContainer {
+.expanded,
+.selectorContainer {
   width: 280px;
 }
 

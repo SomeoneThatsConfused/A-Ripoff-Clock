@@ -22,8 +22,8 @@
 }
 .clockExtraInfo {
   position: relative;
-  top: -.5em;
-  left: -.75em;
+  top: -0.5em;
+  left: -0.75em;
 }
 
 .main-time-title {
@@ -31,7 +31,7 @@
   place-self: start;
   position: relative;
   top: -1em;
-  left: -.75em;
+  left: -0.75em;
 }
 
 .clockMainContent {
@@ -49,9 +49,9 @@
   border-radius: 20%;
   position: absolute;
   left: 0.5em;
-  height: 1.50em;
+  height: 1.5em;
   width: 24px;
-  transition: width .15s;
+  transition: width 0.15s;
   z-index: 20;
 }
 
@@ -85,10 +85,11 @@
   width: 300px;
 }
 
-.noBtn, .yesBtn {
+.noBtn,
+.yesBtn {
   background-color: rgb(24, 24, 27);
   border-radius: 5px;
-  padding: .30em 0.50em;
+  padding: 0.3em 0.5em;
 }
 
 .noBtn {
