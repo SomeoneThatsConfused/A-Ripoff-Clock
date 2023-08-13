@@ -1,0 +1,17 @@
+{
+  "name": "a-ripoff-clock",
+  "version": "1.0.0",
+  "description": "A clock that is based on  the windows clock and others",
+  "main": "index.js",
+  "scripts": {
+    "Build": "postcss ./src/tailwindInput.css -o ./public/styles/tailwind.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.3"
+  }
+}

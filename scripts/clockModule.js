@@ -44,7 +44,6 @@ addClockBtn.addEventListener("click", addClock);
 editBtn.addEventListener("click", showEditIcons);
 clockList.addEventListener("click", (event) => {
   if (event.target.classList.contains("delete-icon")) {
-    console.log("working");
     const clockContainer = event.target.closest(".clock-container");
     if (askToDel) {
       showPrompt((shouldDelete) => {
@@ -61,7 +60,6 @@ clockList.addEventListener("click", (event) => {
 });
 
 // Functions
-clockEmpty();
 
 function showPrompt(callback) {
   const overlay = document.createElement("div");
@@ -136,8 +134,6 @@ function showPrompt(callback) {
 }
 
 function getTime() {
-  const currentTime = document.querySelector(".currentTime");
-  const dateContainer = document.querySelector(".date-container");
   const date = new Date();
   let location = Intl.DateTimeFormat().resolvedOptions().timeZone;
   // Current Time
@@ -170,15 +166,17 @@ function addClock() {
 }
 
 function showEditIcons() {
-  isButtonDisabled();
   const deleteBtns = document.querySelectorAll(".delete-btn");
   deleteBtns.forEach((btn) => {
     if (btn.style.width === "24px") {
+      addClockBtn.disabled = false;
       btn.style.width = "0px";
     } else {
       btn.style.width = "24px";
+      addClockBtn.disabled = true;
     }
   });
+  isButtonDisabled()
 }
 
 function removeClock(container) {
@@ -304,11 +302,10 @@ function createClock(timezone) {
   newClockContainer.appendChild(upperContainer);
   newClockContainer.appendChild(clockMainContent);
   clockList.appendChild(newClockContainer);
-  console.log(hrDifference)
   updateTime();
   setInterval(updateTime, 1000);
   copyBtn.addEventListener("click", () => {
-    const combinedCopyText = `Time: ${newClockTime.textContent} \nLocation: ${location}\nIn Country: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\nhr difference: ${clockAddInfo.textContent}`;
+    const combinedCopyText = `Current Time: ${currentTime.textContent} \nCurrent Location: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\nTimezone Time: ${newClockTime.textContent} \nTimezone Location: ${location}\nStatus: ${clockAddInfo.textContent}`;
     const textArea = document.createElement("div");
     textArea.value = combinedCopyText;
     copyClockInfo(copyBtn, combinedCopyText);
@@ -341,6 +338,9 @@ function clockEmpty() {
     if (!container) {
       const newContainer = document.createElement("div");
       newContainer.textContent = message;
+      editBtn.disabled = true;
+      addClockBtn.disabled = false;
+      isButtonDisabled();
       newContainer.classList.add(
         "clockEmpty",
         "mt-5",
@@ -350,13 +350,19 @@ function clockEmpty() {
         "md:text-2xl",
         "text-center",
         "mx-auto"
+        
       );
+        
       clockList.appendChild(newContainer);
     }
   } else if (container) {
     container.remove();
-  }
+  } else {
+    editBtn.disabled = false;
+  } 
 }
 createClock('America/New_York');
 createClock('America/Los_Angeles');
 createClock('Europe/Paris');
+
+clockEmpty();

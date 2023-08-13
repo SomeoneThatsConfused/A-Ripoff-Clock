@@ -1,3 +1,11 @@
+const currentTime = document.querySelector(".currentTime");
+const dateContainer = document.querySelector(".date-container");
+const resetBtn = document.querySelector(".resetBtn");
+resetBtn.disabled = true;
+resetBtn.setAttribute("aria-label", "Reset stopwatch");
+const lapBtn = document.querySelector(".lapBtn");
+lapBtn.disabled = true;
+lapBtn.setAttribute("aria-label", "Add lap");
 function isButtonDisabled() {
   if (resetBtn.disabled) {
     resetBtn.style.backgroundColor = "#353535";
@@ -22,6 +30,11 @@ function isButtonDisabled() {
     editBtn.style.color = "#353535";
   } else {
     editBtn.style.color = 'white';
+  }
+  if (addClockBtn.disabled) {
+    addClockBtn.style.color = '#353535';
+  } else {
+    addClockBtn.style.color = 'white';
   }
 }
 
