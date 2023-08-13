@@ -6,7 +6,6 @@ const copyIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0
 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
 </svg>
 `;
-
 let askToDel = true;
 const clockList = document.querySelector(".clock-list");
 const addClockBtn = document.querySelector(".add-clock");
@@ -263,16 +262,33 @@ function createClock(timezone) {
     const options = { timeZone: timezone, hour: "2-digit", minute: "2-digit" };
     const formattedTime = now.toLocaleTimeString("en-US", options);
     newClockTime.textContent = formattedTime;
-
+    const hrOptions = {
+      timeZone: timezone,
+      hour: "numeric",
+      hour12: false
+    };
+    const hrFinder = now.toLocaleTimeString("en-US", hrOptions);
     const localHours = new Date().getHours();
-    const targetHours = Number(formattedTime.slice(0, 2));
-    hrDifference = `${targetHours - localHours} HRs`;
-    const absHrDifference = Math.abs(targetHours - localHours);
-    if (absHrDifference > 12) {
-      day = localHours > targetHours ? "Yesterday" : "Tomorrow";
+    const targetHours = Number(hrFinder);
+    let hrDifference = `${targetHours - localHours} HRs`
+    const absHrDifference = Math.abs(localHours - targetHours);
+    let day = "";
+    if (localHours > targetHours) {
+      if (absHrDifference >= 12) {
+        day = "Yesterday";
+      } else {
+        day = "Today";
+      }
+    } else if (localHours < targetHours) {
+      if (absHrDifference >= 12) {
+        day = "Tomorrow";
+      } else {
+        day = "Today";
+      }
     } else {
       day = "Today";
     }
+
     clockAddInfo.textContent = `${day}, ${hrDifference}`;
   };
 
@@ -288,11 +304,11 @@ function createClock(timezone) {
   newClockContainer.appendChild(upperContainer);
   newClockContainer.appendChild(clockMainContent);
   clockList.appendChild(newClockContainer);
-
+  console.log(hrDifference)
   updateTime();
   setInterval(updateTime, 1000);
   copyBtn.addEventListener("click", () => {
-    const combinedCopyText = `Time: ${newClockTime.textContent} \nLocation: ${location}\nhr difference: ${hrDifference}`;
+    const combinedCopyText = `Time: ${newClockTime.textContent} \nLocation: ${location}\nIn Country: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\nhr difference: ${clockAddInfo.textContent}`;
     const textArea = document.createElement("div");
     textArea.value = combinedCopyText;
     copyClockInfo(copyBtn, combinedCopyText);
@@ -304,13 +320,13 @@ function copyClockInfo(btn, combinedCopyText) {
     .writeText(combinedCopyText)
     .then(() => {
       btn.textContent = "Copied!";
-      setTimeout(function () {
+      setTimeout(function() {
         btn.innerHTML = copyIcon;
       }, 1000);
     })
     .catch((error) => {
       btn.textContent = `Copy Failed: ${error}`;
-      setTimeout(function () {
+      setTimeout(function() {
         btn.innerHTML = copyIcon;
       }, 1000);
     });
@@ -341,3 +357,6 @@ function clockEmpty() {
     container.remove();
   }
 }
+createClock('America/New_York');
+createClock('America/Los_Angeles');
+createClock('Europe/Paris');
